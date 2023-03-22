@@ -12,7 +12,7 @@ const listController = new ListController()
 
 router.post(
   '/',
-  [body('title').notEmpty().isString()],
+  [body('title').isString()],
   async (req: Request, res: Response) => {
     try {
       const { title, description, jwtPayload }: AddListRequest = req.body
@@ -58,9 +58,9 @@ router.get('/', async (req: Request, res: Response) => {
 router.patch(
   '/',
   [
-    body('title').notEmpty().isString(),
-    body('isDone').notEmpty().isBoolean(),
-    body('toDoListId').notEmpty().isString(),
+    body('title').isString(),
+    body('isDone').isBoolean(),
+    body('toDoListId').isString(),
   ],
   async (req: Request, res: Response) => {
     try {
@@ -98,7 +98,7 @@ router.delete(
       }
       return true
     }),
-    body('flag').notEmpty().isString().isIn(['DELETE_ALL', 'DELETE_ONE']),
+    body('flag').isIn(['DELETE_ALL', 'DELETE_ONE']),
   ],
   async (req: Request, res: Response) => {
     try {
