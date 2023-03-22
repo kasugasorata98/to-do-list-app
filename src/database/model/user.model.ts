@@ -6,8 +6,8 @@ export interface User extends Document {
   username: string
   toDoList: Array<{
     title: string
-    description: string
-    isDone: boolean
+    description?: string
+    isDone?: boolean
   }>
 }
 
