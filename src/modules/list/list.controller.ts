@@ -40,6 +40,19 @@ class ListController {
       isDone,
     })
   }
+
+  deleteList({
+    username,
+    toDoListId,
+  }: {
+    username: string
+    toDoListId: string
+  }): Promise<UpdateWriteOpResult> {
+    return this.listService.deleteList({
+      username,
+      toDoListId,
+    })
+  }
 }
 
 export default ListController

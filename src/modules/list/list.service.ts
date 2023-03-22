@@ -46,6 +46,18 @@ class ListService {
       { arrayFilters: [{ 'elem._id': toDoListId }] }
     )
   }
+  deleteList({
+    username,
+    toDoListId,
+  }: {
+    username: string
+    toDoListId: string
+  }): Promise<UpdateWriteOpResult> {
+    return userModel.updateOne(
+      { username },
+      { $pull: { toDoList: { _id: toDoListId } } }
+    )
+  }
 }
 
 export default ListService
