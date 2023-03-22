@@ -2,13 +2,14 @@ import {
   CognitoIdentityProviderClient,
   InitiateAuthCommand,
 } from '@aws-sdk/client-cognito-identity-provider'
+import { config } from '../../configs'
 import { Constants } from '../../constants'
 import userModel, { User } from '../../database/model/user.model'
 class AccountService {
   private client: CognitoIdentityProviderClient
   constructor() {
     this.client = new CognitoIdentityProviderClient({
-      region: 'ap-southeast-1',
+      region: config.region,
     })
   }
   createUser({ name, sub, email, username }: { [key: string]: string }) {

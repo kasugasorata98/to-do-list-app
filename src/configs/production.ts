@@ -5,6 +5,7 @@ const production = (): Config => {
     environment: process.env.NODE_ENV || 'production',
     mongoDBString: process.env.MONGODB_CONNECTION_STRING || '',
     port: process.env.PORT || '',
+    region: process.env.REGION || '',
   }
 }
 

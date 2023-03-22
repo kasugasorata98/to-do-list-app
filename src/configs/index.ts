@@ -8,6 +8,7 @@ export interface Config {
   mongoDBString: string
   environment: string
   port: string
+  region: string
 }
 
 export const config = (() => {
