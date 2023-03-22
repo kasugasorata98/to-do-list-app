@@ -8,9 +8,12 @@ const cognitoController = new CognitoController()
 const accountController = new AccountController()
 
 router.post('/authorize', async (req: Request, res: Response) => {
-  const { code } = req.body
+  const { code, callback } = req.body
   try {
-    const response: Token = await cognitoController.authorize(code as string)
+    const response: Token = await cognitoController.authorize(
+      code as string,
+      callback as string
+    )
     await accountController.registerUser(response.id_token)
     res.json(response)
   } catch (err: any) {
@@ -20,9 +23,10 @@ router.post('/authorize', async (req: Request, res: Response) => {
   }
 })
 
-router.get('/getAuthLink', (req: Request, res: Response) => {
+router.get('/getAuthLink/', (req: Request, res: Response) => {
+  const { callback } = req.query
   res.json({
-    authorizeLink: cognitoController.getAuthorizationLink(),
+    authorizeLink: cognitoController.getAuthorizationLink(callback as string),
   })
 })
 

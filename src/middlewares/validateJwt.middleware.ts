@@ -1,13 +1,14 @@
-import { Request, Response, NextFunction } from "express";
-import { CognitoJwtVerifier } from "aws-jwt-verify";
-import dotenv from "dotenv";
-dotenv.config();
+import { Request, Response, NextFunction } from 'express'
+import { CognitoJwtVerifier } from 'aws-jwt-verify'
+import dotenv from 'dotenv'
+import { config } from '../configs'
+dotenv.config()
 
 const verifier = CognitoJwtVerifier.create({
-  userPoolId: process.env.COGNITO_USER_POOL_ID as string,
-  tokenUse: "access",
-  clientId: process.env.COGNITO_CLIENT_ID as string,
-});
+  userPoolId: config.cognitoUserPoolId,
+  tokenUse: 'access',
+  clientId: config.cognitoClientId,
+})
 
 export const validateJwt = async (
   req: Request,
@@ -15,20 +16,20 @@ export const validateJwt = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.headers["authorization"]?.split("Bearer ")[1];
+    const token = req.headers['authorization']?.split('Bearer ')[1]
     if (!token)
       return res.status(403).json({
-        message: "Not Authenticated",
-      });
-    const payload = await verifier.verify(token);
+        message: 'Not Authenticated',
+      })
+    const payload = await verifier.verify(token)
     req.body = {
       ...req.body,
       jwtPayload: payload,
-    };
-    next();
+    }
+    next()
   } catch {
     return res.status(401).json({
-      message: "Unauthorized",
-    });
+      message: 'Unauthorized',
+    })
   }
-};
+}

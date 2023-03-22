@@ -1,3 +1,4 @@
+import { config } from '../../configs'
 import { Token } from '../../entities/token.entity'
 import CognitoService from './cognito.service'
 class CognitoController {
@@ -7,16 +8,12 @@ class CognitoController {
     this.cognitoService = new CognitoService()
   }
 
-  getAuthorizationLink() {
-    return `https://car-listing-marketplace.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=${
-      process.env.REDIRECT_URI as string
-    }&response_type=CODE&client_id=${
-      process.env.COGNITO_CLIENT_ID as string
-    }&scope=openid+email+profile+aws.cognito.signin.user.admin`
+  getAuthorizationLink(callback: string) {
+    return `https://to-do-list.auth.ap-southeast-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=${callback}&response_type=CODE&client_id=${config.cognitoClientId}&scope=openid+email+profile+aws.cognito.signin.user.admin`
   }
 
-  async authorize(authorizationCode: string): Promise<Token> {
-    return this.cognitoService.authorize(authorizationCode)
+  async authorize(authorizationCode: string, callback: string): Promise<Token> {
+    return this.cognitoService.authorize(authorizationCode, callback)
   }
 }
 

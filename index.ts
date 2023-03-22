@@ -17,7 +17,7 @@ async function main() {
     })
   )
 
-  app.use(v1Route)
+  app.use('/api', v1Route)
 
   MongooseClient.connect(config.mongoDBString)
     .then(async res => {
