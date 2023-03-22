@@ -12,7 +12,11 @@ const listController = new ListController()
 
 router.post(
   '/',
-  [body('title').isString()],
+  [
+    body('title')
+      .isString()
+      .withMessage(Constants.ERROR_MESSAGES.TITLE_REQUIRED),
+  ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -58,9 +62,15 @@ router.get('/', async (req: Request, res: Response) => {
 router.patch(
   '/',
   [
-    body('title').isString(),
-    body('isDone').isBoolean(),
-    body('toDoListId').isString(),
+    body('title')
+      .isString()
+      .withMessage(Constants.ERROR_MESSAGES.TITLE_REQUIRED),
+    body('isDone')
+      .isBoolean()
+      .withMessage(Constants.ERROR_MESSAGES.IS_DONE_REQUIRED),
+    body('toDoListId')
+      .isString()
+      .withMessage(Constants.ERROR_MESSAGES.TO_DO_LIST_ID_REQUIRED),
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req)
@@ -106,11 +116,13 @@ router.delete(
   [
     body('toDoListId').custom((value, { req }) => {
       if (req.body.flag === 'DELETE_ONE' && !req.body.toDoListId) {
-        throw new Error('The toDoListId is required when flag=DELETE_ONE')
+        throw new Error(Constants.ERROR_MESSAGES.TO_DO_LIST_ID_REQUIRED)
       }
       return true
     }),
-    body('flag').isIn(['DELETE_ALL', 'DELETE_ONE']),
+    body('flag')
+      .isIn(['DELETE_ALL', 'DELETE_ONE'])
+      .withMessage(Constants.ERROR_MESSAGES.FLAG_MUST_BE),
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req)
