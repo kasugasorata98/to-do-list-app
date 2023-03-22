@@ -1,4 +1,4 @@
-import { Token } from '../../entity/token.entity'
+import { Token } from '../../entities/token.entity'
 import CognitoService from './cognito.service'
 class CognitoController {
   private cognitoService: CognitoService
