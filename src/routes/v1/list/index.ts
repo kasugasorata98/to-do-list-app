@@ -1,5 +1,8 @@
 import express, { Request, Response } from 'express'
 import { Constants } from '../../../constants'
+import { AddListRequest } from '../../../entities/add-list.request.entity'
+import { JwtPayload } from '../../../entities/jwtpayload.entity'
+import { UpdateListRequest } from '../../../entities/update-list.request.entity'
 import ListController from '../../../modules/list/list.controller'
 
 const router = express.Router()
@@ -7,7 +10,7 @@ const listController = new ListController()
 
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { title, description, jwtPayload } = req.body
+    const { title, description, jwtPayload }: AddListRequest = req.body
     if (!title)
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
         message: Constants.ERROR_MESSAGES.TITLE_REQUIRED,
@@ -28,7 +31,11 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const { jwtPayload } = req.body
+    const {
+      jwtPayload,
+    }: {
+      jwtPayload: JwtPayload
+    } = req.body
     const { username } = jwtPayload
     const response = await listController.getList({ username })
     res.json(response)
@@ -42,25 +49,31 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.patch('/', async (req: Request, res: Response) => {
   try {
-    const { jwtPayload, title, description, isDone, toDoListId } = req.body
+    const {
+      jwtPayload,
+      title,
+      description,
+      isDone,
+      toDoListId,
+    }: UpdateListRequest = req.body
     if (!title) {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: 'title is required',
+        message: Constants.ERROR_MESSAGES.TITLE_REQUIRED,
       })
     }
     if (!description) {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: 'description is required',
+        message: Constants.ERROR_MESSAGES.DESCRIPTION_REQUIRED,
       })
     }
     if (isDone === undefined || typeof isDone !== 'boolean') {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: 'isDone is required and must be boolean',
+        message: Constants.ERROR_MESSAGES.IS_DONE_REQUIRED,
       })
     }
     if (!toDoListId) {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: 'toDoListId is required',
+        message: Constants.ERROR_MESSAGES.TO_DO_LIST_ID_REQUIRED,
       })
     }
     const { username } = jwtPayload
@@ -93,12 +106,12 @@ router.delete('/', async (req: Request, res: Response) => {
     } = req.body
     if (flag !== 'DELETE_ALL' && flag !== 'DELETE_ONE') {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: "flag is required to be 'DELETE_ALL' or 'DELETE_ONE'",
+        message: Constants.ERROR_MESSAGES.FLAG_MUST_BE,
       })
     }
     if (flag === 'DELETE_ONE' && !toDoListId) {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: 'toDoListId is required',
+        message: Constants.ERROR_MESSAGES.TO_DO_LIST_ID_REQUIRED,
       })
     }
     const { username } = jwtPayload
