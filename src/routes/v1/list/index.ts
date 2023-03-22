@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { Constants } from '../../../constants'
 import { AddListRequest } from '../../../entities/add-list.request.entity'
+import { DeleteListRequest } from '../../../entities/delete-list.request.entity'
 import { JwtPayload } from '../../../entities/jwtpayload.entity'
 import { UpdateListRequest } from '../../../entities/update-list.request.entity'
 import ListController from '../../../modules/list/list.controller'
@@ -95,15 +96,7 @@ router.patch('/', async (req: Request, res: Response) => {
 
 router.delete('/', async (req: Request, res: Response) => {
   try {
-    const {
-      jwtPayload,
-      toDoListId,
-      flag,
-    }: {
-      jwtPayload: any
-      toDoListId: string
-      flag: 'DELETE_ALL' | 'DELETE_ONE'
-    } = req.body
+    const { jwtPayload, toDoListId, flag }: DeleteListRequest = req.body
     if (flag !== 'DELETE_ALL' && flag !== 'DELETE_ONE') {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
         message: Constants.ERROR_MESSAGES.FLAG_MUST_BE,
