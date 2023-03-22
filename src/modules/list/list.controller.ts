@@ -1,5 +1,4 @@
 import { UpdateWriteOpResult } from 'mongoose'
-import { User } from '../../database/model/user.model'
 import ListService from './list.service'
 
 class ListController {
