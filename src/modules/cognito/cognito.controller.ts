@@ -15,6 +15,10 @@ class CognitoController {
   async authorize(authorizationCode: string, callback: string): Promise<Token> {
     return this.cognitoService.authorize(authorizationCode, callback)
   }
+
+  refreshToken(refreshToken: string) {
+    return this.cognitoService.refreshToken(refreshToken)
+  }
 }
 
 export default CognitoController

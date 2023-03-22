@@ -1,6 +1,7 @@
 import AccountService from './account.service'
 import jwtDecode from 'jwt-decode'
 import { User } from '../../database/model/user.model'
+
 class AccountController {
   private accountService: AccountService
   constructor() {
@@ -20,9 +21,6 @@ class AccountController {
   }
   async getUser(userId: string): Promise<User | null> {
     return this.accountService.getUser(userId)
-  }
-  refreshToken(refreshToken: string) {
-    return this.accountService.refreshToken(refreshToken)
   }
 }
 

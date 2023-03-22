@@ -70,7 +70,7 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     try {
-      const tokens = await accountController.refreshToken(req.body.refreshToken)
+      const tokens = await cognitoController.refreshToken(req.body.refreshToken)
       return res.json(tokens)
     } catch (err: any) {
       res.status(500).json({

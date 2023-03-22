@@ -1,6 +1,10 @@
-import { CognitoIdentityProviderClient } from '@aws-sdk/client-cognito-identity-provider'
+import {
+  CognitoIdentityProviderClient,
+  InitiateAuthCommand,
+} from '@aws-sdk/client-cognito-identity-provider'
 import axios from 'axios'
 import { config } from '../../configs'
+import { Constants } from '../../constants'
 import { Token } from '../../entities/token.entity'
 
 class CognitoService {
@@ -27,6 +31,24 @@ class CognitoService {
       }
     )
     return data
+  }
+  async refreshToken(refreshToken: string) {
+    const request = new InitiateAuthCommand({
+      AuthFlow: Constants.AUTH_FLOWS.REFRESH_TOKEN_AUTH,
+      AuthParameters: {
+        REFRESH_TOKEN: refreshToken,
+      },
+      ClientId: process.env.COGNITO_CLIENT_ID as string,
+    })
+    const response = await this.client.send(request)
+
+    return {
+      access_token: response?.AuthenticationResult?.AccessToken,
+      refresh_token: response?.AuthenticationResult?.RefreshToken,
+      id_token: response?.AuthenticationResult?.IdToken,
+      token_type: response?.AuthenticationResult?.TokenType,
+      expires_in: response?.AuthenticationResult?.ExpiresIn,
+    }
   }
 }
 
