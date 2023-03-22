@@ -10,16 +10,18 @@ class ListService {
     username: string
     title: string
     description: string
-  }): Promise<User | null> {
-    const user = await userModel.findOne({
-      username,
-    })
-    user?.toDoList.push({
-      title,
-      description,
-    })
-    await user?.save()
-    return user
+  }): Promise<UpdateWriteOpResult> {
+    return userModel.updateOne(
+      { username },
+      {
+        $push: {
+          toDoList: {
+            title,
+            description,
+          },
+        },
+      }
+    )
   }
   updateList({
     username,
@@ -57,6 +59,10 @@ class ListService {
       { username },
       { $pull: { toDoList: { _id: toDoListId } } }
     )
+  }
+
+  deleteAll({ username }: { username: string }): Promise<UpdateWriteOpResult> {
+    return userModel.updateOne({ username }, { $set: { toDoList: [] } })
   }
 }
 

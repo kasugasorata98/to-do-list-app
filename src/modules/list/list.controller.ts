@@ -15,7 +15,7 @@ class ListController {
     username: string
     title: string
     description: string
-  }): Promise<User | null> {
+  }): Promise<UpdateWriteOpResult> {
     return this.listService.addToList({ username, title, description })
   }
 
@@ -51,6 +51,12 @@ class ListController {
     return this.listService.deleteList({
       username,
       toDoListId,
+    })
+  }
+
+  deleteAll({ username }: { username: string }): Promise<UpdateWriteOpResult> {
+    return this.listService.deleteAll({
+      username,
     })
   }
 }
