@@ -9,6 +9,9 @@ export interface Config {
   environment: string
   port: string
   region: string
+  cognitoDomain: string
+  cognitoClientId: string
+  cognitoUserPoolId: string
 }
 
 export const config = (() => {
