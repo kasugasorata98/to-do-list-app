@@ -1,3 +1,4 @@
+import { User } from '../../database/model/user.model'
 import ListService from './list.service'
 
 class ListController {
@@ -13,8 +14,8 @@ class ListController {
     username: string
     title: string
     description: string
-  }) {
-    this.listService.addToList({ username, title, description })
+  }): Promise<User | null> {
+    return this.listService.addToList({ username, title, description })
   }
 }
 
