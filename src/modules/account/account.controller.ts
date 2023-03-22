@@ -10,13 +10,11 @@ class AccountController {
     const {
       email,
       sub,
-      name,
       'cognito:username': username,
     }: { [key: string]: string } = jwtDecode(idToken)
     return this.accountService.createUser({
       email,
       sub,
-      name,
       username,
     })
   }
