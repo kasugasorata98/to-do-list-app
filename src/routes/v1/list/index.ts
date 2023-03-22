@@ -93,7 +93,7 @@ router.delete('/', async (req: Request, res: Response) => {
     } = req.body
     if (flag !== 'DELETE_ALL' && flag !== 'DELETE_ONE') {
       return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
-        message: 'flag is required',
+        message: "flag is required to be 'DELETE_ALL' or 'DELETE_ONE'",
       })
     }
     if (flag === 'DELETE_ONE' && !toDoListId) {
