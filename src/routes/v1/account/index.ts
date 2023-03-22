@@ -26,4 +26,16 @@ router.get('/getAuthLink', (req: Request, res: Response) => {
   })
 })
 
+router.post('/refreshToken', async (req: Request, res: Response) => {
+  try {
+    const tokens = await accountController.refreshToken(req.body.refreshToken)
+    return res.json(tokens)
+  } catch (err: any) {
+    res.status(500).json({
+      message: err?.message,
+      code: err?.code,
+    })
+  }
+})
+
 export default router
