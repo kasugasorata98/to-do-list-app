@@ -1,4 +1,4 @@
-import userModel from '../../database/model/user.model'
+import userModel, { User } from '../../database/model/user.model'
 
 class ListService {
   async addToList({
@@ -9,7 +9,7 @@ class ListService {
     username: string
     title: string
     description: string
-  }) {
+  }): Promise<User | null> {
     const user = await userModel.findOne({
       username,
     })
@@ -17,6 +17,8 @@ class ListService {
       title,
       description,
     })
+    await user?.save()
+    return user
   }
 }
 
