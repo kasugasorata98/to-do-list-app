@@ -29,10 +29,6 @@ const UserSchema: Schema = new Schema<User>(
       required: true,
       unique: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
     toDoList: [
       {
         title: {
@@ -44,7 +40,7 @@ const UserSchema: Schema = new Schema<User>(
           required: false,
         },
         isDone: {
-          type: String,
+          type: Boolean,
           default: false,
         },
       },
