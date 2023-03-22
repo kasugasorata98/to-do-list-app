@@ -1,5 +1,5 @@
 import { UpdateWriteOpResult } from 'mongoose'
-import userModel, { User } from '../../database/model/user.model'
+import userModel from '../../database/model/user.model'
 
 class ListService {
   async addToList({
