@@ -1,3 +1,5 @@
-class ListController {}
+class ListController {
+  addToList({}) {}
+}
 
 export default ListController
