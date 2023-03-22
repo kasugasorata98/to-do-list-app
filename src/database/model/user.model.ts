@@ -5,6 +5,11 @@ export interface User extends Document {
   sub: string
   name: string
   username: string
+  toDoList: Array<{
+    title: string
+    description: string
+    isDone: boolean
+  }>
 }
 
 const UserSchema: Schema = new Schema<User>(
@@ -28,6 +33,22 @@ const UserSchema: Schema = new Schema<User>(
       type: String,
       required: true,
     },
+    toDoList: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: false,
+        },
+        isDone: {
+          type: String,
+          default: false,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
