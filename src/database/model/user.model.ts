@@ -3,7 +3,6 @@ import mongoose, { Schema, Document } from 'mongoose'
 export interface User extends Document {
   email: string
   sub: string
-  name: string
   username: string
   toDoList: Array<{
     title: string
