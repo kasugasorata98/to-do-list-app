@@ -1,11 +1,11 @@
 import userModel, { User } from '../../database/model/user.model'
 class AccountService {
-  createUser({ name, sub, email, username }: { [key: string]: string }) {
+  createUser({ sub, email, username }: { [key: string]: string }) {
     return userModel.findOneAndUpdate(
       {
         email,
       },
-      { name, sub, email, username },
+      { sub, email, username },
       { upsert: true }
     )
   }

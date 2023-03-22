@@ -7,7 +7,7 @@ class AccountController {
   constructor() {
     this.accountService = new AccountService()
   }
-  async registerUser(idToken: string) {
+  registerUser(idToken: string): Promise<User | null> {
     const {
       email,
       sub,
