@@ -1,6 +1,6 @@
 import { CognitoIdentityProviderClient } from '@aws-sdk/client-cognito-identity-provider'
 import axios from 'axios'
-import { Token } from '../../entity/token.entity'
+import { Token } from '../../entities/token.entity'
 
 class CognitoService {
   private client: CognitoIdentityProviderClient
