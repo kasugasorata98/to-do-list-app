@@ -2,6 +2,7 @@ import {
   CognitoIdentityProviderClient,
   InitiateAuthCommand,
 } from '@aws-sdk/client-cognito-identity-provider'
+import { Constants } from '../../constants'
 import userModel, { User } from '../../database/model/user.model'
 class AccountService {
   private client: CognitoIdentityProviderClient
@@ -24,7 +25,7 @@ class AccountService {
   }
   async refreshToken(refreshToken: string) {
     const request = new InitiateAuthCommand({
-      AuthFlow: 'REFRESH_TOKEN_AUTH',
+      AuthFlow: Constants.AUTH_FLOWS.REFRESH_TOKEN_AUTH,
       AuthParameters: {
         REFRESH_TOKEN: refreshToken,
       },
