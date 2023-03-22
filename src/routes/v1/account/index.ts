@@ -20,4 +20,10 @@ router.post('/authorize', async (req: Request, res: Response) => {
   }
 })
 
+router.get('/getAuthLink', (req: Request, res: Response) => {
+  res.json({
+    authorizeLink: cognitoController.getAuthorizationLink(),
+  })
+})
+
 export default router
