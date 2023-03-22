@@ -1,3 +1,4 @@
+import { UpdateWriteOpResult } from 'mongoose'
 import userModel, { User } from '../../database/model/user.model'
 
 class ListService {
@@ -19,6 +20,31 @@ class ListService {
     })
     await user?.save()
     return user
+  }
+  updateList({
+    username,
+    toDoListId,
+    title,
+    description,
+    isDone,
+  }: {
+    username: string
+    toDoListId: string
+    title: string
+    description: string
+    isDone: boolean
+  }): Promise<UpdateWriteOpResult> {
+    return userModel.updateOne(
+      { username, 'toDoList._id': toDoListId },
+      {
+        $set: {
+          'toDoList.$[elem].isDone': isDone,
+          'toDoList.$[elem].title': title,
+          'toDoList.$[elem].description': description,
+        },
+      },
+      { arrayFilters: [{ 'elem._id': toDoListId }] }
+    )
   }
 }
 
