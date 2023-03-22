@@ -80,6 +80,40 @@ router.patch('/', async (req: Request, res: Response) => {
   }
 })
 
-router.delete('/', async (req: Request, res: Response) => {})
+router.delete('/', async (req: Request, res: Response) => {
+  try {
+    const {
+      jwtPayload,
+      toDoListId,
+      flag,
+    }: {
+      jwtPayload: any
+      toDoListId: string
+      flag: 'DELETE_ALL' | 'DELETE_ONE'
+    } = req.body
+    if (flag !== 'DELETE_ALL' && flag !== 'DELETE_ONE') {
+      return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
+        message: 'flag is required',
+      })
+    }
+    if (flag === 'DELETE_ONE' && !toDoListId) {
+      return res.status(Constants.HTTP_CODES.BAD_REQUEST).json({
+        message: 'toDoListId is required',
+      })
+    }
+    const { username } = jwtPayload
+    const response = await listController.deleteList({
+      username,
+      toDoListId,
+      flag,
+    })
+    res.json(response)
+  } catch (err: any) {
+    return res.status(Constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json({
+      message: err?.message,
+      code: err?.code,
+    })
+  }
+})
 
 export default router

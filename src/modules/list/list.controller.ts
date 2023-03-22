@@ -48,14 +48,25 @@ class ListController {
   deleteList({
     username,
     toDoListId,
+    flag,
   }: {
     username: string
     toDoListId: string
+    flag: 'DELETE_ALL' | 'DELETE_ONE'
   }): Promise<UpdateWriteOpResult> {
-    return this.listService.deleteList({
-      username,
-      toDoListId,
-    })
+    switch (flag) {
+      case 'DELETE_ALL': {
+        return this.listService.deleteAll({
+          username,
+        })
+      }
+      case 'DELETE_ONE': {
+        return this.listService.deleteList({
+          username,
+          toDoListId,
+        })
+      }
+    }
   }
 
   deleteAll({ username }: { username: string }): Promise<UpdateWriteOpResult> {
