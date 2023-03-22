@@ -14,14 +14,14 @@ router.post(
   '/',
   [body('title').isString()],
   async (req: Request, res: Response) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res
+        .status(Constants.HTTP_CODES.BAD_REQUEST)
+        .json({ errors: errors.array() })
+    }
     try {
       const { title, description, jwtPayload }: AddListRequest = req.body
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-        return res
-          .status(Constants.HTTP_CODES.BAD_REQUEST)
-          .json({ errors: errors.array() })
-      }
       const response = await listController.addToList({
         title,
         description,
@@ -63,6 +63,12 @@ router.patch(
     body('toDoListId').isString(),
   ],
   async (req: Request, res: Response) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res
+        .status(Constants.HTTP_CODES.BAD_REQUEST)
+        .json({ errors: errors.array() })
+    }
     try {
       const {
         jwtPayload,
@@ -79,7 +85,13 @@ router.patch(
         isDone,
         toDoListId,
       })
-      res.json(response)
+      res
+        .status(
+          response.modifiedCount === 0
+            ? Constants.HTTP_CODES.NOT_MODIFIED
+            : Constants.HTTP_CODES.OK
+        )
+        .json(response)
     } catch (err: any) {
       return res.status(Constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json({
         message: err?.message,
@@ -101,6 +113,12 @@ router.delete(
     body('flag').isIn(['DELETE_ALL', 'DELETE_ONE']),
   ],
   async (req: Request, res: Response) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res
+        .status(Constants.HTTP_CODES.BAD_REQUEST)
+        .json({ errors: errors.array() })
+    }
     try {
       const { jwtPayload, toDoListId, flag }: DeleteListRequest = req.body
       const { username } = jwtPayload
