@@ -28,7 +28,9 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.get('/', async (req: Request, res: Response) => {
   const { jwtPayload } = req.body
-  res.json(jwtPayload)
+  const { username } = jwtPayload
+  const response = await listController.getList({ username })
+  res.json(response)
 })
 
 router.patch('/', async (req: Request, res: Response) => {})

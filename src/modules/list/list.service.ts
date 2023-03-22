@@ -1,5 +1,5 @@
 import { UpdateWriteOpResult } from 'mongoose'
-import userModel from '../../database/model/user.model'
+import userModel, { User } from '../../database/model/user.model'
 
 class ListService {
   async addToList({
@@ -23,6 +23,11 @@ class ListService {
       }
     )
   }
+
+  getList({ username }: { username: string }): Promise<User | null> {
+    return userModel.findOne({ username }).select('toDoList -_id')
+  }
+
   updateList({
     username,
     toDoListId,
