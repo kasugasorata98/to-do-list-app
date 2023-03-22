@@ -15,5 +15,8 @@ export const Constants = {
     IS_DONE_REQUIRED: 'isDone is required and must be boolean',
     TO_DO_LIST_ID_REQUIRED: 'toDoListId is required',
     FLAG_MUST_BE: "flag is required to be 'DELETE_ALL' or 'DELETE_ONE'",
+    CODE_REQUIRED: 'code is required',
+    CALLBACK_REQUIRED: 'callback is required',
+    REFRESH_TOKEN_REQUIRED: 'refreshToken is required',
   },
 }
