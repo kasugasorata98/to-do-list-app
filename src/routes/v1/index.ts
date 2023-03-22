@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import shortUrlRoute from './short-url'
+import account from './account'
 
-router.use('/short-url', shortUrlRoute)
+router.use('/v1', account)
 export default router

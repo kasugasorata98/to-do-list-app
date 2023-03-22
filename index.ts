@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import MongooseClient from './src/database/MongooseClient'
 import { config } from './src/configs'
+import v1Route from './src/routes/v1'
 dotenv.config()
 
 async function main() {
@@ -15,6 +16,8 @@ async function main() {
       extended: true,
     })
   )
+
+  app.use(v1Route)
 
   MongooseClient.connect(config.mongoDBString)
     .then(async res => {
