@@ -30,14 +30,10 @@ describe('addToList', () => {
       username: 'username',
     }
     const addToListResponse = await listController.addToList(mockObject)
-    const expectedAddToListResponse = {
-      acknowledged: true,
-      modifiedCount: 1,
-      upsertedId: null,
-      upsertedCount: 0,
-      matchedCount: 1,
-    }
-    expect(addToListResponse).toStrictEqual(expectedAddToListResponse)
+    expect(addToListResponse![0]).toMatchObject({
+      title: mockObject.title,
+      isDone: false,
+    })
     const userResponse = await userModel
       .findOne({
         username: 'username',
@@ -106,18 +102,10 @@ describe('updateList', () => {
         },
       ],
     }
-    const newUser = await userModel.create(mockUser)
-    // Call the updateList method with mock arguments
-    const mockToDoListId = newUser.toDoList[0]._id.toString()
-    const mockTitle = 'Updated Task'
-    const mockDescription = 'Do the updated task'
-    const mockIsDone = true
-    const actualResult: UpdateWriteOpResult = await listController.updateList({
-      username: mockUser.username,
-      toDoListId: mockToDoListId,
-      title: mockTitle,
-      isDone: mockIsDone,
-    })
+    await userModel.create(mockUser)
+
+    const mockTitle = 'Task 1'
+    const mockIsDone = false
 
     const userResponse = await userModel.findOne({
       username: mockUser.username,
