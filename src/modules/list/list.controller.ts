@@ -13,7 +13,7 @@ class ListController {
   }: {
     username: string
     title: string
-  }): Promise<UpdateWriteOpResult> {
+  }): Promise<User['toDoList'] | undefined> {
     return this.listService.addToList({ username, title })
   }
 

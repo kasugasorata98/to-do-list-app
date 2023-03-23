@@ -7,7 +7,7 @@ export interface User extends Document {
   toDoList: Array<{
     _id: string
     title: string
-    isDone?: boolean
+    isDone: boolean
   }>
 }
 

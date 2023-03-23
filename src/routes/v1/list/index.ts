@@ -30,7 +30,7 @@ router.post(
         title,
         username: jwtPayload.username,
       })
-      return res.status(Constants.HTTP_CODES.CREATED).json(response)
+      return res.status(Constants.HTTP_CODES.CREATED).json(response![0])
     } catch (err: any) {
       return res.status(Constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json({
         message: err?.message,

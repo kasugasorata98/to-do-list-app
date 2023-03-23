@@ -1,4 +1,4 @@
-import { UpdateWriteOpResult } from 'mongoose'
+import { Types, UpdateWriteOpResult } from 'mongoose'
 import userModel, { User } from '../../database/model/user.model'
 
 class ListService {
@@ -8,17 +8,27 @@ class ListService {
   }: {
     username: string
     title: string
-  }): Promise<UpdateWriteOpResult> {
-    return userModel.updateOne(
+  }): Promise<User['toDoList'] | undefined> {
+    const _id = new Types.ObjectId()
+    await userModel.updateOne(
       { username },
       {
         $push: {
           toDoList: {
+            _id,
             title,
           },
         },
       }
     )
+    const user = await userModel.findOne(
+      {
+        username,
+        toDoList: { $elemMatch: { _id } },
+      },
+      { 'toDoList.$': 1 }
+    )
+    return user?.toDoList
   }
 
   getList({ username }: { username: string }): Promise<User | null> {
