@@ -68,12 +68,6 @@ class ListController {
       }
     }
   }
-
-  deleteAll({ username }: { username: string }): Promise<UpdateWriteOpResult> {
-    return this.listService.deleteAll({
-      username,
-    })
-  }
 }
 
 export default ListController

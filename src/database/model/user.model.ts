@@ -1,10 +1,11 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document, Types } from 'mongoose'
 
 export interface User extends Document {
   email: string
   sub: string
   username: string
   toDoList: Array<{
+    _id: string
     title: string
     description?: string
     isDone?: boolean
@@ -30,6 +31,11 @@ const UserSchema: Schema = new Schema<User>(
     },
     toDoList: [
       {
+        _id: {
+          type: Types.ObjectId,
+          index: true,
+          auto: true,
+        },
         title: {
           type: String,
           required: true,
