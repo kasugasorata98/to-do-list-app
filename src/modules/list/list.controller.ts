@@ -10,13 +10,11 @@ class ListController {
   addToList({
     username,
     title,
-    description,
   }: {
     username: string
     title: string
-    description: string
   }): Promise<UpdateWriteOpResult> {
-    return this.listService.addToList({ username, title, description })
+    return this.listService.addToList({ username, title })
   }
 
   getList({ username }: { username: string }): Promise<User | null> {
@@ -27,20 +25,17 @@ class ListController {
     username,
     toDoListId,
     title,
-    description,
     isDone,
   }: {
     username: string
     toDoListId: string
     title: string
-    description: string
     isDone: boolean
   }): Promise<UpdateWriteOpResult> {
     return this.listService.updateList({
       username,
       toDoListId,
       title,
-      description,
       isDone,
     })
   }

@@ -7,7 +7,6 @@ export interface User extends Document {
   toDoList: Array<{
     _id: string
     title: string
-    description?: string
     isDone?: boolean
   }>
 }
@@ -39,10 +38,6 @@ const UserSchema: Schema = new Schema<User>(
         title: {
           type: String,
           required: true,
-        },
-        description: {
-          type: String,
-          required: false,
         },
         isDone: {
           type: Boolean,

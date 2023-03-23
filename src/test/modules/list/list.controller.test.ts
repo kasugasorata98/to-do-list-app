@@ -27,7 +27,6 @@ describe('addToList', () => {
   it("should add a to-do item to the user's to-do list", async () => {
     const mockObject = {
       title: 'title',
-      description: 'description',
       username: 'username',
     }
     const addToListResponse = await listController.addToList(mockObject)
@@ -51,7 +50,6 @@ describe('addToList', () => {
       toDoList: [
         {
           title: 'title',
-          description: 'description',
           isDone: false,
         },
       ],
@@ -64,7 +62,6 @@ describe('getList', () => {
   it('should return the user object with only toDoList property', async () => {
     const expectedToDoList = {
       title: 'title',
-      description: 'description',
       isDone: false,
     }
     const expectedUserObject = new userModel({
@@ -105,7 +102,6 @@ describe('updateList', () => {
       toDoList: [
         {
           title: 'Task 1',
-          description: 'Do task 1',
           isDone: false,
         },
       ],
@@ -120,7 +116,6 @@ describe('updateList', () => {
       username: mockUser.username,
       toDoListId: mockToDoListId,
       title: mockTitle,
-      description: mockDescription,
       isDone: mockIsDone,
     })
 
@@ -128,7 +123,6 @@ describe('updateList', () => {
       username: mockUser.username,
     })
     expect(userResponse?.toDoList[0].title).toEqual(mockTitle)
-    expect(userResponse?.toDoList[0].description).toEqual(mockDescription)
     expect(userResponse?.toDoList[0].isDone).toEqual(mockIsDone)
   })
   it('should throw an error when toDoListId does not exist', async () => {
@@ -139,7 +133,6 @@ describe('updateList', () => {
       toDoList: [
         {
           title: 'Existing Title',
-          description: 'Existing Description',
           isDone: false,
         },
       ],
@@ -151,7 +144,6 @@ describe('updateList', () => {
       username: mockUser.username,
       toDoListId,
       title: 'New Title',
-      description: 'New Description',
       isDone: true,
     })
     const expectedUpdate = {
@@ -175,12 +167,10 @@ describe('deleteList', () => {
       toDoList: [
         {
           title: 'Test Title',
-          description: 'Test Description',
           isDone: false,
         },
         {
           title: 'Test Title2',
-          description: 'Test Description2',
           isDone: false,
         },
       ],

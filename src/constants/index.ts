@@ -11,7 +11,6 @@ export const Constants = {
   },
   ERROR_MESSAGES: {
     TITLE_REQUIRED: 'title is required',
-    DESCRIPTION_REQUIRED: 'description is required',
     IS_DONE_REQUIRED: 'isDone is required and must be boolean',
     TO_DO_LIST_ID_REQUIRED: 'toDoListId is required',
     FLAG_MUST_BE: "flag is required to be 'DELETE_ALL' or 'DELETE_ONE'",

@@ -25,10 +25,9 @@ router.post(
         .json({ errors: errors.array() })
     }
     try {
-      const { title, description, jwtPayload }: AddListRequest = req.body
+      const { title, jwtPayload }: AddListRequest = req.body
       const response = await listController.addToList({
         title,
-        description,
         username: jwtPayload.username,
       })
       return res.status(Constants.HTTP_CODES.CREATED).json(response)
@@ -80,18 +79,12 @@ router.patch(
         .json({ errors: errors.array() })
     }
     try {
-      const {
-        jwtPayload,
-        title,
-        description,
-        isDone,
-        toDoListId,
-      }: UpdateListRequest = req.body
+      const { jwtPayload, title, isDone, toDoListId }: UpdateListRequest =
+        req.body
       const { username } = jwtPayload
       const response = await listController.updateList({
         username,
         title,
-        description,
         isDone,
         toDoListId,
       })

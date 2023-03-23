@@ -36,9 +36,8 @@ describe('addToList', () => {
   it('should add a new item to the to-do list', async () => {
     const username = 'testuser'
     const title = 'Test Title'
-    const description = 'Test Description'
 
-    await listService.addToList({ username, title, description })
+    await listService.addToList({ username, title })
 
     const userResponse = await userModel.findOne({
       username: 'testuser',
@@ -46,7 +45,6 @@ describe('addToList', () => {
 
     expect(userResponse?.toDoList[0]).toMatchObject({
       title: 'Test Title',
-      description: 'Test Description',
     })
   })
 })
@@ -56,7 +54,6 @@ describe('getList', () => {
     await listService.addToList({
       username: 'testuser',
       title: 'Test to-do item',
-      description: 'This is a test to-do item',
     })
 
     const result = await listService.getList({ username: 'testuser' })
@@ -64,7 +61,6 @@ describe('getList', () => {
     expect(result).toBeTruthy()
     expect(result!.toDoList[0]).toMatchObject({
       title: 'Test to-do item',
-      description: 'This is a test to-do item',
       isDone: false,
     })
   })
@@ -86,7 +82,6 @@ describe('updateList', () => {
         {
           _id: new mongoose.Types.ObjectId(),
           title: 'Finish work',
-          description: 'Complete the report by 5pm',
           isDone: false,
         },
       ],
@@ -97,7 +92,6 @@ describe('updateList', () => {
       username: user.username,
       toDoListId: user.toDoList[0]._id,
       title: 'Finish report',
-      description: 'Complete the report by 4pm',
       isDone: true,
     })
 
@@ -114,7 +108,6 @@ describe('updateList', () => {
     expect(updatedUser?.toDoList).toHaveLength(1)
     expect(updatedUser?.toDoList[0]).toMatchObject({
       title: 'Finish report',
-      description: 'Complete the report by 4pm',
       isDone: true,
     })
   })
@@ -128,7 +121,6 @@ describe('updateList', () => {
         {
           _id: new mongoose.Types.ObjectId(),
           title: 'Finish work',
-          description: 'Complete the report by 5pm',
           isDone: false,
         },
       ],
@@ -139,7 +131,6 @@ describe('updateList', () => {
       username: user.username,
       toDoListId: '641b1255e0128b5bad081a22',
       title: 'Finish report',
-      description: 'Complete the report by 4pm',
       isDone: true,
     })
 
@@ -165,7 +156,6 @@ describe('getList', () => {
         {
           _id: new mongoose.Types.ObjectId(),
           title: 'test',
-          description: 'test description',
           isDone: false,
         },
       ],
@@ -217,10 +207,7 @@ describe('deleteAll', () => {
       username: 'testusertestuser',
       email: 'testusertestuser',
       sub: 'testusertestuser',
-      toDoList: [
-        { title: 'item1', description: 'description1' },
-        { title: 'item2', description: 'description2' },
-      ],
+      toDoList: [{ title: 'item1' }, { title: 'item2' }],
     }
     await userModel.create(testUser)
 

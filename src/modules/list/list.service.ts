@@ -5,11 +5,9 @@ class ListService {
   async addToList({
     username,
     title,
-    description,
   }: {
     username: string
     title: string
-    description: string
   }): Promise<UpdateWriteOpResult> {
     return userModel.updateOne(
       { username },
@@ -17,7 +15,6 @@ class ListService {
         $push: {
           toDoList: {
             title,
-            description,
           },
         },
       }
@@ -32,13 +29,11 @@ class ListService {
     username,
     toDoListId,
     title,
-    description,
     isDone,
   }: {
     username: string
     toDoListId: string
     title: string
-    description: string
     isDone: boolean
   }): Promise<UpdateWriteOpResult> {
     return userModel.updateOne(
@@ -47,7 +42,6 @@ class ListService {
         $set: {
           'toDoList.$[elem].isDone': isDone,
           'toDoList.$[elem].title': title,
-          'toDoList.$[elem].description': description,
         },
       },
       { arrayFilters: [{ 'elem._id': toDoListId }] }
