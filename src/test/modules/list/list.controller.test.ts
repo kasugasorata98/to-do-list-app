@@ -1,7 +1,7 @@
 import mongoose, { UpdateWriteOpResult } from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import ListController from '../../../modules/list/list.controller'
-import userModel from '../../../database/model/user.model'
+import userModel, { User } from '../../../database/model/user.model'
 
 let mongoServer: MongoMemoryServer
 let listController: ListController
@@ -163,5 +163,67 @@ describe('updateList', () => {
       matchedCount: 0,
     }
     expect(update).toStrictEqual(expectedUpdate)
+  })
+})
+
+describe('deleteList', () => {
+  let user: User
+  beforeEach(async () => {
+    const mockUser = {
+      username: 'another_user',
+      sub: 'another_sub',
+      email: 'another_email',
+      toDoList: [
+        {
+          title: 'Test Title',
+          description: 'Test Description',
+          isDone: false,
+        },
+        {
+          title: 'Test Title2',
+          description: 'Test Description2',
+          isDone: false,
+        },
+      ],
+    }
+    user = await userModel.create(mockUser)
+  })
+  afterEach(async () => {
+    await userModel.deleteMany({})
+  })
+  it('should delete a single item from the list when flag is DELETE_ONE', async () => {
+    const result = await listController.deleteList({
+      username: user.username,
+      toDoListId: user.toDoList[0]._id,
+      flag: 'DELETE_ONE',
+    })
+    const expectedResult = {
+      acknowledged: true,
+      modifiedCount: 1,
+      upsertedId: null,
+      upsertedCount: 0,
+      matchedCount: 1,
+    }
+    expect(result).toMatchObject(expectedResult)
+    const user2 = await userModel.findById(user._id)
+    expect(user2?.toDoList.length).toBe(1)
+  })
+
+  it('should delete all items from the list when flag is DELETE_ALL', async () => {
+    const result = await listController.deleteList({
+      username: user.username,
+      toDoListId: user.toDoList[0]._id,
+      flag: 'DELETE_ALL',
+    })
+    const expectedResult = {
+      acknowledged: true,
+      modifiedCount: 1,
+      upsertedId: null,
+      upsertedCount: 0,
+      matchedCount: 1,
+    }
+    expect(result).toMatchObject(expectedResult)
+    const user2 = await userModel.findById(user._id)
+    expect(user2?.toDoList.length).toBe(0)
   })
 })
