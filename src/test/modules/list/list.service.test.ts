@@ -224,7 +224,6 @@ describe('deleteAll', () => {
     }
     await userModel.create(testUser)
 
-    // Call the deleteAll function
     const result = await listService.deleteAll({ username: 'testusertestuser' })
 
     expect(result).toStrictEqual({
