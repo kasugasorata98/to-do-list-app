@@ -132,7 +132,6 @@ describe('updateList', () => {
     expect(userResponse?.toDoList[0].isDone).toEqual(mockIsDone)
   })
   it('should throw an error when toDoListId does not exist', async () => {
-    // Create a mock user document with a toDoList array that does not contain the target toDoListId
     const mockUser = {
       username: 'mock_user',
       sub: 'test-sub',
