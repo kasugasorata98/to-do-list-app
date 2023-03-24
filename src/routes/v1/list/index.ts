@@ -5,7 +5,7 @@ import { DeleteListRequest } from '../../../entities/delete-list.request.entity'
 import { JwtPayload } from '../../../entities/jwtpayload.entity'
 import { UpdateListRequest } from '../../../entities/update-list.request.entity'
 import ListController from '../../../modules/list/list.controller'
-import { body, validationResult } from 'express-validator'
+import { body, query, validationResult } from 'express-validator'
 
 const router = express.Router()
 const listController = new ListController()
@@ -107,13 +107,13 @@ router.patch(
 router.delete(
   '/',
   [
-    body('toDoListId').custom((value, { req }) => {
-      if (req.body.flag === 'DELETE_ONE' && !req.body.toDoListId) {
+    query('toDoListId').custom((value, { req }) => {
+      if (req?.query?.flag === 'DELETE_ONE' && !value) {
         throw new Error(Constants.ERROR_MESSAGES.TO_DO_LIST_ID_REQUIRED)
       }
       return true
     }),
-    body('flag')
+    query('flag')
       .isIn(['DELETE_ALL', 'DELETE_ONE'])
       .withMessage(Constants.ERROR_MESSAGES.FLAG_MUST_BE),
   ],
