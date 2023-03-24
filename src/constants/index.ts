@@ -8,6 +8,7 @@ export const Constants = {
     BAD_REQUEST: 400,
     INTERNAL_SERVER_ERROR: 500,
     NOT_MODIFIED: 304,
+    NOT_FOUND: 404,
   },
   ERROR_MESSAGES: {
     TITLE_REQUIRED: 'title is required',
