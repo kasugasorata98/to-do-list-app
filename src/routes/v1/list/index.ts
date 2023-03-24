@@ -125,12 +125,13 @@ router.delete(
         .json({ errors: errors.array() })
     }
     try {
-      const { jwtPayload, toDoListId, flag }: DeleteListRequest = req.body
+      const jwtPayload: DeleteListRequest['jwtPayload'] = req.body.jwtPayload
       const { username } = jwtPayload
+      const { toDoListId, flag } = req.query
       const response = await listController.deleteList({
         username,
-        toDoListId,
-        flag,
+        toDoListId: toDoListId as DeleteListRequest['toDoListId'],
+        flag: flag as DeleteListRequest['flag'],
       })
       if (!response)
         res.status(Constants.HTTP_CODES.NOT_FOUND).json({
