@@ -21,13 +21,14 @@ The API has the following features:
 ## API Endpoints
 
 The api endpoints as follows:
-getAuthLink: `/api/v1/account/getAuthLink?callback=http://localhost:3000/callback \GET`
-authorize: `/api/v1/account/authorize \POST`
-refreshToken: `/api/v1/account/refreshToken \POST`
-create: `/api/v1/list \POST`
-getList: `/api/v1/list \GET`
-updateList: `/api/v1/list \PATCH`
-deleteList: `/api/v1/list \DELETE`
+
+- getAuthLink: `/api/v1/account/getAuthLink?callback=http://localhost:3000/callback \GET`
+- authorize: `/api/v1/account/authorize \POST`
+- refreshToken: `/api/v1/account/refreshToken \POST`
+- create: `/api/v1/list \POST`
+- getList: `/api/v1/list \GET`
+- updateList: `/api/v1/list \PATCH`
+- deleteList: `/api/v1/list \DELETE`
 
 ## Unit Tests
 
