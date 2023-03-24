@@ -132,7 +132,7 @@ router.delete(
         toDoListId,
         flag,
       })
-      if (!response) res.status(Constants.HTTP_CODES.NOT_FOUND)
+      if (!response) res.sendStatus(Constants.HTTP_CODES.NOT_FOUND)
       else res.json(response)
     } catch (err: any) {
       return res.status(Constants.HTTP_CODES.INTERNAL_SERVER_ERROR).json({
